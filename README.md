@@ -13,5 +13,5 @@ Please submit bug reports to [the repositories GitHub Issues](https://github.com
 ### Screenshot(s):
 
 <p align='center'>
-<img src='https://cdn.rawgit.com/josephmcasey/locuslabs-mapsonline-zendesk-app/.github/mapsonline-zendesk-app.png' width='800' alt='npm start'>
+<img src='https://raw.githubusercontent.com/josephmcasey/locuslabs-mapsonline-zendesk-app/master/.github/mapsonline-zendesk-app.png' width='800' alt='ZenDesk with LocusLabs'>
 </p>
