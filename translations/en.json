@@ -1,6 +1,6 @@
 {
   "app": {
-    "name": "Maps Online",
+    "name": "Maps Online by LocusLabs",
     "short_description": "Show the location associated with your support ticket.",
     "long_description": "Show the location associated with your support ticket. Limited to Venues supported by LocusLabs.",
     "installation_instructions": "Simply click install."
