@@ -12,7 +12,7 @@ $(function() {
 
 function ticketFields(client, ticketFields) {
 
-    const promises = []
+    const promises = [];
 
     for(const ticketField of ticketFields) {
 
@@ -22,7 +22,11 @@ function ticketFields(client, ticketFields) {
             case 'Floor Identifier':
             case 'Latitude':
             case 'Longitude':
-                const promise = client.get(`ticket.customField:${ticketField.name}`)
+                const promise = new Promise( (resolve, reject) => {
+                    client.get(`ticket.customField:${ticketField.name}`).then( (result) => {
+                        resolve({ [ticketField.label] : result })
+                    })
+                } )
                 promises.push(promise)
                 break;
             default:
@@ -33,9 +37,14 @@ function ticketFields(client, ticketFields) {
     // console.log('ticketField: ', ticketField.name)
 
     Promise.all(promises).then(
-        function( [ accounts, venue, floor, latitude, longitude ] ) {
+        function( promises ) {
+            let result = {}
+            promises.forEach( promise => {
+                Object.assign(result, promise);
+            })
+            console.log(result)
             const v = o => Object.values(o)[1]
-            showInfo( [ v(accounts), v(venue), v(floor), v(latitude), v(longitude) ] );
+            showInfo( [ v(result['LocusLabs Account']), v(result['Venue Identifier']), v(result['Floor Identifier']), v(result['Latitude']), v(result['Longitude']) ] );
         },
         function(response) {
             console.log('error: ', response)
@@ -48,8 +57,18 @@ function ticketFields(client, ticketFields) {
 function showInfo( [ accounts, venue, floor, latitude, longitude ] ) {
 
     console.log('data: ', accounts, venue, floor, latitude, longitude)
-
-    const firstAccount = JSON.parse(accounts)[0];
+    
+    let firstAccount;
+    try {
+        firstAccount = JSON.parse(accounts)[0];
+    } catch (exception) {
+        const comma = accounts.indexOf(',');
+        if ( comma === -1 ) {
+            firstAccount = accounts;
+        } else {
+            firstAccount = accounts.substring(0, accounts.indexOf(',')).trim();
+        }
+    }
 
     console.log('firstAccount: ', firstAccount)
 
@@ -59,6 +78,7 @@ function showInfo( [ accounts, venue, floor, latitude, longitude ] ) {
         'floor': floor,
         'coord': `${latitude},${longitude}`,
     };
+    console.log(requester_data)
     var source = $("#requester-template").html();
     var template = Handlebars.compile(source);
     var html = template(requester_data);
