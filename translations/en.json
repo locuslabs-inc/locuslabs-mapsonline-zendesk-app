@@ -2,7 +2,7 @@
   "app": {
     "name": "Maps Online by LocusLabs",
     "short_description": "Show the location associated with your support ticket.",
-    "long_description": "This integration is included as part of a LocusLabs MapsOnline Subscription. \n\n The LocusLabs MapsOnline app for Zendesk provides higher quality support by displaying a map that can show your agents the location of concern while they serve customers in Zendesk.\n\n The application uses your LocusLabs Account ID to show a map of your venue on the ZenDesk Ticket.\n\n ## Improve customer satisfaction with high fidelity conversations \n * Solve chats and tickets faster by having access to relevant location information, such as venue, floor, and precise lat/lng, from within Zendesk. \n * Interact with your venue map to better understand the context of your requester.",
+    "long_description": "This integration is included as part of a LocusLabs MapsOnline Subscription. \n\n The LocusLabs MapsOnline app for Zendesk provides higher quality support by displaying a map that can show your agents the location of concern while they serve customers in Zendesk.\n\n The application uses your LocusLabs Account ID to show a map of your venue on the ZenDesk Ticket.\n\n Improve customer satisfaction with high fidelity conversations \n\n * Solve chats and tickets faster by having access to relevant location information, such as venue, floor, and precise lat/lng, from within Zendesk. \n\n * Interact with your venue map to better understand the context of your requester.",
     "installation_instructions": "Simply click install and include a custom ticket field called LocusLabs Account with your Account ID."
   }
 }
