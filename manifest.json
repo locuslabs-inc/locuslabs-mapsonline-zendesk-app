@@ -1,9 +1,9 @@
 {
-  "name": "Maps Online by LocusLabs",
+  "name": "MapsOnline by LocusLabs",
   "author": {
-    "name": "Joseph Casey",
-    "email": "joseph@locuslabs.com",
-    "url": "http://www.josephmcasey.com"
+    "name": "LocusLabs",
+    "email": "andrew@locuslabs.com",
+    "url": "http://www.locuslabs.com/"
   },
   "defaultLocale": "en",
   "private": false,
