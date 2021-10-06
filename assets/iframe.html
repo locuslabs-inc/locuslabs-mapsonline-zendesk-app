@@ -7,6 +7,7 @@
 <body>
 
 <div id="content"></div>
+<divi class="locusmaps"></divi>
 
 <footer>
   <a href="mailto:support@locuslabs.com?subject=Zendesk Market App Bug - MapsOnline Embedded" target="_blank">Report A Bug</a>
@@ -19,7 +20,7 @@
           venueId: {{venue}},
           accountId: {{account}}
         }
-
+        LMInit.setLogging(true);
         LMInit.newMap('.locusmaps', config)
           .then(map => {
             map.setPosition({ lat: {{lat}}, lng: {{lng}}, floorId: {{floor}}, zoom: 12.5})

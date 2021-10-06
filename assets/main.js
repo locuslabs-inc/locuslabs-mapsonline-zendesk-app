@@ -42,12 +42,12 @@ function ticketFields(client, ticketFields) {
             promises.forEach( promise => {
                 Object.assign(result, promise);
             })
-            console.log(result)
+            console.log('Atrius ', result)
             const v = o => Object.values(o)[1]
             showInfo( [ v(result['LocusLabs Account']), v(result['Venue Identifier']), v(result['Floor Identifier']), v(result['Latitude']), v(result['Longitude']) ] );
         },
         function(response) {
-            console.log('error: ', response)
+            console.log('Atrius error: ', response)
             showError(response);
         }
     )
@@ -55,7 +55,7 @@ function ticketFields(client, ticketFields) {
 
 function showInfo( [ accounts, venue, floor, latitude, longitude ] ) {
 
-    console.log('data: ', accounts, venue, floor, latitude, longitude)
+    console.log('Atrius data: ', accounts, venue, floor, latitude, longitude)
 
     let firstAccount;
     try {
@@ -69,7 +69,7 @@ function showInfo( [ accounts, venue, floor, latitude, longitude ] ) {
         }
     }
 
-    console.log('firstAccount: ', firstAccount)
+    console.log('Atrius firstAccount: ', firstAccount)
 
     const requester_data = {
         'account': firstAccount,
@@ -78,7 +78,7 @@ function showInfo( [ accounts, venue, floor, latitude, longitude ] ) {
         'lat': latitude,
         'lng': longitude,
     };
-    console.log(requester_data)
+    console.log('Atrius ', requester_data)
     var source = $("#requester-template").html();
     var template = Handlebars.compile(source);
     var html = template(requester_data);
@@ -88,7 +88,7 @@ function showInfo( [ accounts, venue, floor, latitude, longitude ] ) {
         () => {
             //window.LocusMaps({command: 'version'}).then(console.log)
             //window.LocusMaps({command: "drawMarker", name: "Map Note Placement", lat: latitude, lng: longitude, imageURL: `https://img.locuslabs.com/js/misc/map-note-pin.svg`})
-            map.getPosition()
+            window.LLMap.getPosition()
                 .then(pos => window.LLMap.drawMarker(
                     "Map Note Placement",
                     {
