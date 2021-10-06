@@ -13,16 +13,20 @@
 </footer>
 
 <script id="requester-template" type="text/x-handlebars-template">
-  <div
-  class="locusmaps"
-  data-account-id={{account}}
-  data-venue-id={{venue}}
-  data-zoom="55"
-  data-level-id={{floor}}
-  data-position={{coord}}
-  data-fullpage="data-fullpage"
-  data-controls="none"></div>
-  <script src="https://js.locuslabs.com/latest/locusmaps.js"></script>
+  <script src="https://maps.locuslabs.com/sdk/LocusMapsSDK-umd.js"></script>
+  <script>
+        var config = {
+          venueId: {{venue}},
+          accountId: {{account}}
+        }
+
+        LMInit.newMap('.locusmaps', config)
+          .then(map => {
+            map.setPosition({ lat: {{lat}}, lng: {{lng}}, floorId: {{floor}}, zoom: 12.5})
+            window.LLMap = map
+          })
+
+  </script>
 </script>
 
 <script id="error-template" type="text/x-handlebars-template">

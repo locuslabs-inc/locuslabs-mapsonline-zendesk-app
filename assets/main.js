@@ -51,13 +51,12 @@ function ticketFields(client, ticketFields) {
             showError(response);
         }
     )
-
 }
 
 function showInfo( [ accounts, venue, floor, latitude, longitude ] ) {
 
     console.log('data: ', accounts, venue, floor, latitude, longitude)
-    
+
     let firstAccount;
     try {
         firstAccount = JSON.parse(accounts)[0];
@@ -76,7 +75,8 @@ function showInfo( [ accounts, venue, floor, latitude, longitude ] ) {
         'account': firstAccount,
         'venue': venue,
         'floor': floor,
-        'coord': `${latitude},${longitude}`,
+        'lat': latitude,
+        'lng': longitude,
     };
     console.log(requester_data)
     var source = $("#requester-template").html();
@@ -84,12 +84,20 @@ function showInfo( [ accounts, venue, floor, latitude, longitude ] ) {
     var html = template(requester_data);
     $("#content").html(html);
 
-
-
     setTimeout(
         () => {
-            window.LocusMaps({command: 'version'}).then(console.log)
-            window.LocusMaps({command: "drawMarker", name: "Map Note Placement", lat: latitude, lng: longitude, imageURL: `https://img.locuslabs.com/js/misc/map-note-pin.svg`})
+            //window.LocusMaps({command: 'version'}).then(console.log)
+            //window.LocusMaps({command: "drawMarker", name: "Map Note Placement", lat: latitude, lng: longitude, imageURL: `https://img.locuslabs.com/js/misc/map-note-pin.svg`})
+            map.getPosition()
+                .then(pos => window.LLMap.drawMarker(
+                    "Map Note Placement",
+                    {
+                        lat: latitude,
+                        lng: longitude,
+                        ord: pos.ord
+                    },
+                    'https://img.locuslabs.com/js/misc/map-note-pin.svg'
+                    ))
         },
         5000
     )
