@@ -12,23 +12,7 @@
 <footer>
   <a href="mailto:support@locuslabs.com?subject=Zendesk Market App Bug - MapsOnline Embedded" target="_blank">Report A Bug</a>
 </footer>
-
-<script id="requester-template" type="text/x-handlebars-template">
-  <script src="https://maps.locuslabs.com/sdk/LocusMapsSDK-umd.js"></script>
-  <script>
-        var config = {
-          venueId: {{venue}},
-          accountId: {{account}}
-        }
-        LMInit.setLogging(true);
-        LMInit.newMap('.locusmaps', config)
-          .then(map => {
-            map.setPosition({ lat: {{lat}}, lng: {{lng}}, floorId: {{floor}}, zoom: 12.5})
-            window.LLMap = map
-          })
-
-  </script>
-</script>
+<script src="https://maps.locuslabs.com/sdk/LocusMapsSDK-umd.js"></script>
 
 <script id="error-template" type="text/x-handlebars-template">
   <p>{{status}} - {{statusText}} error. Please report a bug at the link below.</p>
