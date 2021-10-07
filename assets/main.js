@@ -4,15 +4,20 @@ $(function() {
 
     client.get('ticketFields').then(
         function(data) {
+            console.log('Atrius: ', data)
             ticketFields(client, data.ticketFields);
         }
-    )
+    ).catch(error => {
+        console.log("Atrius: ", error)
+    })
 
 });
 
 function ticketFields(client, ticketFields) {
 
     const promises = [];
+    
+
 
     for(const ticketField of ticketFields) {
 
@@ -24,7 +29,10 @@ function ticketFields(client, ticketFields) {
             case 'Longitude':
                 const promise = new Promise( (resolve, reject) => {
                     client.get(`ticket.customField:${ticketField.name}`).then( (result) => {
+                        console.log('Atrius: ', ticketField.label, result)
                         resolve({ [ticketField.label] : result })
+                    }).catch(error => {
+                        console.log('Atrius: ', error);
                     })
                 } )
                 promises.push(promise)
