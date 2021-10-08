@@ -13,36 +13,35 @@ $(function() {
 
 });
 
+const isAtriusField = (ticketField) => {
+    const atriusFields = [
+        'LocusLabs Account',
+        'Venue Identifier',
+        'Floor Identifier',
+        'Latitude',
+        'Longitude',
+    ]
+
+    return atriusFields.includes(ticketField.label)
+}
+
 function ticketFields(client, ticketFields) {
 
-    const promises = [];
-    
+    const atriusTicketFields = ticketFields.filter(isAtriusField)
 
+    const promises = atriusTicketFields.map((ticketField) => {
+        const promise = new Promise((resolve, reject) => {
+            console.log('Atrius: ', ticketField.name, ticketField.label, ticketField)
+            client.get(`ticket.customField:${ticketField.name}`).then( (result) => {
+                console.log('Atrius: ', ticketField.label, result)
+                resolve({ [ticketField.label] : result })
+            }).catch(error => {
+                console.log('Atrius: ', error);
+            })
+        })
 
-    for(const ticketField of ticketFields) {
-
-        switch(ticketField.label) {
-            case 'LocusLabs Account':
-            case 'Venue Identifier':
-            case 'Floor Identifier':
-            case 'Latitude':
-            case 'Longitude':
-                const promise = new Promise( (resolve, reject) => {
-                    client.get(`ticket.customField:${ticketField.name}`).then( (result) => {
-                        console.log('Atrius: ', ticketField.label, result)
-                        resolve({ [ticketField.label] : result })
-                    }).catch(error => {
-                        console.log('Atrius: ', error);
-                    })
-                } )
-                promises.push(promise)
-                break;
-            default:
-                break;
-        }
-    }
-
-    // console.log('ticketField: ', ticketField.name)
+        return promise
+    })
 
     Promise.all(promises).then(
         function( promises ) {
@@ -78,29 +77,6 @@ function showInfo( [ accounts, venue, floor, latitude, longitude ] ) {
         }
     }
 
-    var config = {
-        venueId: venue,
-        accountId: firstAccount
-    }
-
-
-    LMInit.setLogging(true);
-    LMInit.newMap('.locusmaps', config)
-        .then(map => {
-            map.setPosition({ lat: latitude, lng: longitude, floorId: floor, zoom: 17})
-            return map.getPosition()
-                .then(pos => map.drawMarker(
-                    "Map Note Placement",
-                    {
-                        lat: latitude,
-                        lng: longitude,
-                        ord: pos.ord
-                    },
-                    'https://img.locuslabs.com/js/misc/map-note-pin.svg'
-                ))
-        })
-        
-
 
     console.log('Atrius firstAccount: ', firstAccount)
 
@@ -117,23 +93,32 @@ function showInfo( [ accounts, venue, floor, latitude, longitude ] ) {
     var html = template(requester_data);
     $("#content").html(html);
 
-    // setTimeout(
-    //     () => {
-    //         //window.LocusMaps({command: 'version'}).then(console.log)
-    //         //window.LocusMaps({command: "drawMarker", name: "Map Note Placement", lat: latitude, lng: longitude, imageURL: `https://img.locuslabs.com/js/misc/map-note-pin.svg`})
-    //         LLMap.getPosition()
-    //             .then(pos => LLMap.drawMarker(
-    //                 "Map Note Placement",
-    //                 {
-    //                     lat: latitude,
-    //                     lng: longitude,
-    //                     ord: pos.ord
-    //                 },
-    //                 'https://img.locuslabs.com/js/misc/map-note-pin.svg'
-    //                 ))
-    //     },
-    //     5000
-    // )
+    setTimeout(
+        () => {
+            var config = {
+                venueId: venue,
+                accountId: firstAccount
+            }
+        
+        
+            LMInit.setLogging(true);
+            LMInit.newMap('.locusmaps', config)
+                .then(map => {
+                    map.setPosition({ lat: latitude, lng: longitude, floorId: floor, zoom: 17})
+                    return map.getPosition()
+                        .then(pos => map.drawMarker(
+                            "Map Note Placement",
+                            {
+                                lat: latitude,
+                                lng: longitude,
+                                ord: pos.ord
+                            },
+                            'https://img.locuslabs.com/js/misc/map-note-pin.svg'
+                        ))
+                })
+        },
+        5000
+    )
 }
 
 function showError(response) {
