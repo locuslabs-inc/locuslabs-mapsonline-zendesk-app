@@ -93,9 +93,6 @@ function showInfo( [ accounts, venue, floor, latitude, longitude ] ) {
                 venueId: venue,
                 accountId: firstAccount
             }
-        
-        
-            LMInit.setLogging(true);
             LMInit.newMap('.locusmaps', config)
                 .then(map => {
                     map.setPosition({ lat: latitude, lng: longitude, floorId: floor, zoom: 17})
