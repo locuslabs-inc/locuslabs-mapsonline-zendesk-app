@@ -4,7 +4,6 @@ $(function() {
 
     client.get('ticketFields').then(
         function(data) {
-            console.log('Atrius: ', data)
             ticketFields(client, data.ticketFields);
         }
     )
@@ -28,7 +27,6 @@ function ticketFields(client, ticketFields) {
 
     const promises = atriusTicketFields.map((ticketField) => {
         const promise = new Promise((resolve, reject) => {
-            console.log('Atrius: ', ticketField.name, ticketField.label, ticketField)
             client.get(`ticket.customField:${ticketField.name}`).then( (result) => {
                 resolve({ [ticketField.label] : result })
             })
@@ -43,21 +41,16 @@ function ticketFields(client, ticketFields) {
             promises.forEach( promise => {
                 Object.assign(result, promise);
             })
-            console.log('Atrius ', result)
             const v = o => Object.values(o)[1]
             showInfo( [ v(result['LocusLabs Account']), v(result['Venue Identifier']), v(result['Floor Identifier']), v(result['Latitude']), v(result['Longitude']) ] );
         },
         function(response) {
-            console.log('Atrius error: ', response)
             showError(response);
         }
     )
 }
 
 function showInfo( [ accounts, venue, floor, latitude, longitude ] ) {
-
-    console.log('Atrius data: ', accounts, venue, floor, latitude, longitude)
-
     
     let firstAccount;
     try {
@@ -71,9 +64,6 @@ function showInfo( [ accounts, venue, floor, latitude, longitude ] ) {
         }
     }
 
-
-    console.log('Atrius firstAccount: ', firstAccount)
-
     const requester_data = {
         'account': firstAccount,
         'venue': venue,
@@ -81,7 +71,6 @@ function showInfo( [ accounts, venue, floor, latitude, longitude ] ) {
         'lat': latitude,
         'lng': longitude,
     };
-    console.log('Atrius ', requester_data)
     var source = $("#requester-template").html();
     var template = Handlebars.compile(source);
     var html = template(requester_data);
