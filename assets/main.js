@@ -76,29 +76,26 @@ function showInfo( [ accounts, venue, floor, latitude, longitude ] ) {
     var html = template(requester_data);
     $("#content").html(html);
 
-    setTimeout(
-        () => {
-            var config = {
-                venueId: venue,
-                accountId: firstAccount
-            }
-            LMInit.newMap('.locusmaps', config)
-                .then(map => {
-                    map.setPosition({ lat: latitude, lng: longitude, floorId: floor, zoom: 17})
-                    return map.getPosition()
-                        .then(pos => map.drawMarker(
-                            "Map Note Placement",
-                            {
-                                lat: latitude,
-                                lng: longitude,
-                                ord: pos.ord
-                            },
-                            'https://img.locuslabs.com/js/misc/map-note-pin.svg'
-                        ))
-                })
-        },
-        5000
-    )
+
+    var config = {
+        venueId: venue,
+        accountId: firstAccount
+    }
+    LMInit.newMap('.locusmaps', config)
+        .then(map => {
+            map.setPosition({ lat: latitude, lng: longitude, floorId: floor, zoom: 17})
+            return map.getPosition()
+                .then(pos => map.drawMarker(
+                    "Map Note Placement",
+                    {
+                        lat: latitude,
+                        lng: longitude,
+                        ord: pos.ord
+                    },
+                    'https://img.locuslabs.com/js/misc/map-note-pin.svg'
+                ))
+        })
+
 }
 
 function showError(response) {
