@@ -7,10 +7,7 @@ $(function() {
             console.log('Atrius: ', data)
             ticketFields(client, data.ticketFields);
         }
-    ).catch(error => {
-        console.log("Atrius: ", error)
-    })
-
+    )
 });
 
 const isAtriusField = (ticketField) => {
@@ -33,10 +30,7 @@ function ticketFields(client, ticketFields) {
         const promise = new Promise((resolve, reject) => {
             console.log('Atrius: ', ticketField.name, ticketField.label, ticketField)
             client.get(`ticket.customField:${ticketField.name}`).then( (result) => {
-                console.log('Atrius: ', ticketField.label, result)
                 resolve({ [ticketField.label] : result })
-            }).catch(error => {
-                console.log('Atrius: ', error);
             })
         })
 
