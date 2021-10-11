@@ -7,18 +7,18 @@
 <body>
 
 <div id="content"></div>
-<div class="locusmaps"></div>
 
 <footer>
   <a href="mailto:support@locuslabs.com?subject=Zendesk Market App Bug - MapsOnline Embedded" target="_blank">Report A Bug</a>
 </footer>
-<script src="https://maps.locuslabs.com/sdk/LocusMapsSDK-umd.js"></script>
+
 
 <script id="requester-template" type="text/x-handlebars-template">
-  
+  <div class="locusmaps"></div>
+  <script src="https://maps.locuslabs.com/sdk/LocusMapsSDK-umd.js"></script>
 </script>
 
-<script src="https://maps.locuslabs.com/sdk/LocusMapsSDK-umd.js"></script>
+
 
 <script id="error-template" type="text/x-handlebars-template">
   <p>{{status}} - {{statusText}} error. Please report a bug at the link below.</p>
